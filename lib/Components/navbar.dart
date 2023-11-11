@@ -34,18 +34,18 @@ class _NavigationMainState extends State<NavigationMain> {
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            selectedIcon: Icon(Icons.emergency_recording ),
-            icon: Icon(Icons.emergency_recording_outlined ),
+            selectedIcon: Icon(Icons.emergency_recording, color: Colors.blue ),
+            icon: Icon(Icons.emergency_recording_outlined, color: Colors.orange ),
             label: 'Riesgo de Caidas',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.location_on),
-            icon: Icon(Icons.location_on_outlined),
+            selectedIcon: Icon(Icons.location_on, color: Colors.blue),
+            icon: Icon(Icons.location_on_outlined, color: Colors.orange),
             label: 'Ubicación',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.event_busy),
-            icon: Icon(Icons.event_busy_outlined),
+            selectedIcon: Icon(Icons.event_busy, color: Colors.orange),
+            icon: Icon(Icons.event_busy_outlined, color: Colors.orange),
             label: 'Eventos',
           ),
         ],
