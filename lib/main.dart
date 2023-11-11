@@ -1,18 +1,24 @@
+import 'package:falldetectionapp/Components/navbar.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+void main() => runApp(const MainApp());
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.lightBlue[800]
+      ),
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('FALL DETECTION APP')
+        ),
         body: Center(
-          child: Text('Hello World!'),
+          child: NavBarComponent()
         ),
       ),
     );
