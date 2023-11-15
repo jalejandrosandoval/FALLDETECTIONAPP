@@ -18,7 +18,8 @@ class FallsPageMain extends StatefulWidget{
 class FallsPageState extends State<FallsPageMain>{
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(      
+      backgroundColor: Colors.indigo.shade900,
       body: Center(child: Text('Caídas')),
     );
   }
