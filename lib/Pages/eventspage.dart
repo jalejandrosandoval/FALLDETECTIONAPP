@@ -18,7 +18,7 @@ class EventsPageMain extends StatefulWidget{
 class EventsPageState extends State<EventsPageMain>{
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(child: Text('Eventos')),
     );
   }

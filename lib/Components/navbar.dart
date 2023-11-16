@@ -51,9 +51,9 @@ class _NavigationMainState extends State<NavigationMain> {
         ],
       ),
       body: <Widget>[
-        FallsPage(),
-        UbicationPage(),
-        EventsPage(),
+        const FallsPage(),
+        const UbicationPage(),
+        const EventsPage(),
       ][currentPageIndex],
     );
   }

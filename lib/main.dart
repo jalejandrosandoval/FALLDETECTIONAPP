@@ -15,9 +15,9 @@ class MainApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('FALL DETECTION APP')
+          title: const Text('FALL DETECTION APP')
         ),
-        body: Center(
+        body: const Center(
           child: NavBarComponent()
         ),
       ),
