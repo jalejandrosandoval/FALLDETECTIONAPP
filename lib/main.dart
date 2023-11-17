@@ -2,8 +2,6 @@ import 'package:falldetectionapp/Pages/initpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-// void main() => runApp(const MainApp());
-
 void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     const FirebaseOptions firebaseConfig  = FirebaseOptions(
