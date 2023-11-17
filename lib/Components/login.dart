@@ -20,7 +20,6 @@ class LoginMain extends StatefulWidget {
 
 class _LoginMainState extends State<LoginMain> {
   bool isRegistered = false, isLoggedIn = false, _hidePassword = false; 
-  String? userName, userPassword;
   static const Color _colorForms = Colors.lightBlue;
 
   TextEditingController userNameController = TextEditingController(); 

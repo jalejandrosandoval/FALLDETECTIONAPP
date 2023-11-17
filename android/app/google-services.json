@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "917758134506",
+    "firebase_url": "https://myfailapp-6e9ce-default-rtdb.firebaseio.com",
+    "project_id": "myfailapp-6e9ce",
+    "storage_bucket": "myfailapp-6e9ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917758134506:android:facdf4066ac051bdc82f93",
+        "android_client_info": {
+          "package_name": "com.example.falldetectionapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcCCsMRneXTulU7f8xFZGV7QCTM9H34j4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917758134506:android:692006939a1b476bc82f93",
+        "android_client_info": {
+          "package_name": "com.example.talle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcCCsMRneXTulU7f8xFZGV7QCTM9H34j4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
