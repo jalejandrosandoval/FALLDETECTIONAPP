@@ -50,6 +50,7 @@ class _NavigationMainState extends State<NavigationMain> {
           ),
         ],
       ),
+      appBar: AppBar(title: const Text('FALL DETECTION APP')),
       body: <Widget>[
         const FallsPage(),
         const UbicationPage(),

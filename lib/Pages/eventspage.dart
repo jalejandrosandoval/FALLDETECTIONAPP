@@ -11,7 +11,8 @@ class EventsPage extends StatelessWidget {
 
 class EventsPageMain extends StatefulWidget{
   const EventsPageMain({super.key});
-    @override
+  
+  @override
   State<EventsPageMain> createState() => EventsPageState();
 }
 
