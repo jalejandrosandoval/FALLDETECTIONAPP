@@ -56,7 +56,23 @@ class UbicationPageState extends State<UbicationPageMain> {
       print("Error al obtener la ubicación: $e");
     }
   }
+  
+  LatLngBounds boundsFromLatLngList(List<LatLng> list) {
+    double? x0, x1, y0, y1;
+    for (LatLng latLng in list) {
+      if (x0 == null || x1 == null || y0 == null || y1 == null) {
+        x0 = x1 = latLng.latitude;
+        y0 = y1 = latLng.longitude;
+      } else {
+        if (latLng.latitude > x1) x1 = latLng.latitude;
+        if (latLng.latitude < x0) x0 = latLng.latitude;
+        if (latLng.longitude > y1) y1 = latLng.longitude;
+        if (latLng.longitude < y0) y0 = latLng.longitude;
+      }
+    }
 
+    return LatLngBounds(northeast: LatLng(x1!, y1!),southwest:  LatLng(x0!, y0!));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +88,8 @@ class UbicationPageState extends State<UbicationPageMain> {
               onMapCreated: (controller) => {
                 setState((){
                   if(_currentLocationFall != const LatLng(0, 0)){
-                    controller.animateCamera(CameraUpdate.newLatLngBounds(LatLngBounds(southwest: _currentLocation, northeast: _currentLocationFall), 0.0));
+                    var latBounds = boundsFromLatLngList([_currentLocation, _currentLocationFall]);
+                    controller.animateCamera(CameraUpdate.newLatLngBounds(latBounds, 0.0));
                   }
                 })
               },

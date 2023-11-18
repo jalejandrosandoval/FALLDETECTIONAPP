@@ -1,6 +1,7 @@
 import 'package:falldetectionapp/Components/navbar.dart';
 import 'package:falldetectionapp/Components/register.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class LoginComponent extends StatelessWidget {
@@ -49,8 +50,6 @@ class _LoginMainState extends State<LoginMain> {
                   .toString()
                   .toLowerCase()
                   .contains(userPasswordController.text.toLowerCase())) {
-            print(
-                'value=$element - $userNameController.text - $userPasswordController.text');
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return NavBarComponent(userDataParam: element);
             }));
