@@ -71,7 +71,7 @@ class _LoginMainState extends State<LoginMain> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assetsassets/images/login.png"),
+            Image.asset("assets/images/login.png"),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 30.0),
               child: TextField(
