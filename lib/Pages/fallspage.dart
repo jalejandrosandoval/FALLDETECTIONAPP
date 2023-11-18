@@ -156,8 +156,7 @@ class FallsPageState extends State<FallsPageMain> {
       ..recipients.add('bsanchez294@unab.edu.co') // Correo de destino
       ..recipients.add('jsandoval568@unab.edu.co') // Correo de destino
       ..subject = 'Alerta de Caída Detectada'
-      ..text =
-          'Se detectó una caída en las coordenadas: Latitud: $latitude, Longitud: $longitude';
+      ..text = 'Se detectó una caída en las coordenadas: Latitud: $latitude, Longitud: $longitude';
 
     // Envía el correo electrónico
     try {
