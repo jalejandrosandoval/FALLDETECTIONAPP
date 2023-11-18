@@ -8,11 +8,15 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+dynamic userData;
+
 class FallsPage extends StatelessWidget {
-  const FallsPage({super.key});
+  final dynamic userDataParam;
+  const FallsPage({Key? key, this.userDataParam}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    userData = userDataParam;
     return const FallsPageMain();
   }
 }
@@ -213,15 +217,15 @@ DatabaseReference? dbRef;
 
   saveInfo() async {
     dbRef = FirebaseDatabase.instance.ref().child('caidas');
-    String nombre = "Horacio";
+    String nombre = "Horacio", apellido = "Serpa";
     int idUsuario = 1;
      final now = DateTime.now();
      String fecha = now.toString();
 
-
      try {
         Map caidas= {
           'nombre': nombre,
+          'apellido': apellido,
           'id_usuario': idUsuario,
           'latitud': latitude,
           'longitud': longitude,
