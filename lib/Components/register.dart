@@ -43,8 +43,9 @@ class RegisterMainState extends State<RegisterMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('FALL DETECTION APP')),
-      body: SingleChildScrollView(
-        child: Column(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text("Registrarse...",
@@ -100,6 +101,7 @@ class RegisterMainState extends State<RegisterMain> {
             )
           ],
         ),
+        )
       ),
     );
   }
