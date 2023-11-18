@@ -17,16 +17,15 @@ class EventsPage extends StatelessWidget {
   }
 }
 
-class EventsPageMain extends StatefulWidget{
+class EventsPageMain extends StatefulWidget {
   const EventsPageMain({super.key});
-  
+
   @override
   State<EventsPageMain> createState() => EventsPageState();
 }
 
-
-class EventsPageState extends State<EventsPageMain>{
-  bool isRegistered = false, isLoggedIn = false; 
+class EventsPageState extends State<EventsPageMain> {
+  bool isRegistered = false, isLoggedIn = false;
   static const Color _colorForms = Colors.lightBlue;
 
   String? userName, userPassword;
@@ -34,9 +33,9 @@ class EventsPageState extends State<EventsPageMain>{
 
   Object listData = [];
 
-  _getSearch(String param) async{  
+  _getSearch(String param) async {
     DatabaseReference dbRef = FirebaseDatabase.instance.ref().child('caidas');
-    
+
     dbRef.onValue.listen((event) {
       DataSnapshot dataSnapshot = event.snapshot;
       Object values = dataSnapshot.value!;
@@ -58,24 +57,23 @@ class EventsPageState extends State<EventsPageMain>{
         child: Column(
           children: <Widget>[
             TextField(
-              onChanged: (value) => 
-              {
-                setState((){
+              onChanged: (value) {
+                setState(() {
                   userNameSearch = value;
-                }),
-                _getSearch(value)
+                });
+                _getSearch(value);
               },
               decoration: InputDecoration(
                 icon: IconButton(
-                  icon: const Icon(Icons.search_outlined), 
-                  onPressed: () { 
+                  icon: const Icon(Icons.search_outlined),
+                  onPressed: () {
                     _getSearch(userNameSearch);
-                  }
+                  },
                 ),
                 labelText: 'Buscar...',
                 hintText: 'Buscar...',
                 iconColor: _colorForms,
-              )
+              ),
             ),
             const Padding(padding: EdgeInsets.only(bottom: 20.0)),
             FirebaseAnimatedList(
@@ -159,4 +157,3 @@ class EventsPageState extends State<EventsPageMain>{
     );
   }
 }
-         
