@@ -6,7 +6,7 @@ class RegisterComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RegisterMain();
+    return const RegisterMain();
   }
 }
 
@@ -25,10 +25,12 @@ class RegisterMainState extends State<RegisterMain> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController userPasswordController = TextEditingController();
 
+  // ignore: non_constant_identifier_names
   _Register() {
     setState(() {});
   }
 
+  // ignore: non_constant_identifier_names
   _Login() async {
     setState(() {
       Navigator.push(

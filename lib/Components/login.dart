@@ -1,7 +1,6 @@
 import 'package:falldetectionapp/Components/navbar.dart';
 import 'package:falldetectionapp/Components/register.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class LoginComponent extends StatelessWidget {
@@ -29,6 +28,7 @@ class _LoginMainState extends State<LoginMain> {
 
     List<dynamic> listUsers = List.empty();
 
+  // ignore: non_constant_identifier_names
   _Register() {
     setState(() {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -37,6 +37,7 @@ class _LoginMainState extends State<LoginMain> {
     });
   }
 
+  // ignore: non_constant_identifier_names
   _Login() {
     setState(() {
       if (userNameController.text.isNotEmpty &&

@@ -75,6 +75,7 @@ class _NavigationMainState extends State<NavigationMain> {
         appBar: AppBar(title: const Text('FALL DETECTION APP')),
         body: (userData["tipo"].toString().toLowerCase() == "cuidador" ? 
           <Widget>[
+            // ignore: prefer_null_aware_operators
             UbicationPage(latIngParam: (latLng != null ? latLng! : null)),
             EventsPage(userDataParam: userData),
           ][currentPageIndex] :
