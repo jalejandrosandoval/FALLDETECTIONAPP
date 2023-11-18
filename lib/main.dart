@@ -38,9 +38,9 @@ class MainApp extends StatelessWidget {
         primaryColor: Colors.lightBlue[800],
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: Scaffold(
+      home: const Scaffold(
         body: SingleChildScrollView(
-          child: const InitPage(),
+          child: InitPage(),
         ),
       ),
     );
