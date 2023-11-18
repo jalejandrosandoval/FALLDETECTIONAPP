@@ -1,6 +1,6 @@
 # FALLDETECTIONAPP
 
-Aplicación Movil de Detección de Caidas - Flutter &amp; Dart
+Aplicación Movil de Detección de Caidas con uso del Acelerometro, GPS, GOOGLE MAPS, FIREBASE, etc. - Realizada en Flutter &amp; Dart
 
 ## Estructura Principal de Archivos
 
