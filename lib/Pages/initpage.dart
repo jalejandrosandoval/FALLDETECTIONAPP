@@ -13,11 +13,7 @@ class InitPage extends StatelessWidget {
           const Text(
             "Bienvenido...",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-          SizedBox(
-            height: 200, // Ajusta según sea necesario
-            child: Image.asset("assets/images/welcome.png"),
-          ),
+          ), Image.asset("assets/images/welcome.png"),
           FloatingActionButton.extended(
             backgroundColor: Colors.teal[400],
             onPressed: () => {

@@ -39,8 +39,14 @@ class MainApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       home: Scaffold(
-        body: SingleChildScrollView(
-          child: const InitPage(),
+        appBar: AppBar(title: const Text('FALL DETECTION APP')),
+        body: const Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [InitPage()],
+            )
+          ),
         ),
       ),
     );

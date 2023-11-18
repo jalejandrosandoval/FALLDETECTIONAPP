@@ -51,7 +51,6 @@ class EventsPageState extends State<EventsPageMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Padding( 
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -82,73 +81,76 @@ class EventsPageState extends State<EventsPageMain> {
               itemBuilder: (context, snapshot, animation, index) {
                 Map contact = snapshot.value as Map;
                 contact['key'] = snapshot.key;
-                return SingleChildScrollView(
+                return GestureDetector(
                   child: 
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Card(
-                        child: ListTile(
-                          dense: true,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) { 
-                                return NavBarComponent(
-                                  latIngParam: LatLng(contact['latitud'], contact['longitud']), 
-                                  userDataParam: userData
-                                ); 
-                              })
-                            );
-                          },
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          trailing: IconButton(
-                            icon: Icon(Icons.delete_outline, color: Colors.red[700]),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text("Eliminar Registo..."),
-                                    content: const Text("¿Está realmente seguro?"),
-                                    actions: [
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          textStyle: Theme.of(context).textTheme.labelLarge,
-                                        ), 
-                                        onPressed: () { Navigator.pop(context, false); }, 
-                                        child: const Text("Cancelar")
-                                      ),
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          textStyle: Theme.of(context).textTheme.labelLarge,
-                                        ),
-                                        onPressed: () { databaseReference.child(contact['key']).remove().then((value) => Navigator.pop(context, false)); }, 
-                                        child: const Text("Ok")
-                                      ),
-                                    ]
-                                  );
-                                },
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Card(
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) { 
+                                  return NavBarComponent(
+                                    latIngParam: LatLng(contact['latitud'], contact['longitud']), 
+                                    userDataParam: userData
+                                  ); 
+                                })
                               );
                             },
-                          ),
-                          title: 
-                          Text(
-                            contact['nombre'],
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
-                          ),
-                          subtitle: Text(
-                            'Aceleración: ${contact['aceleracion']} m/s^2. \nUbicación: (Latitud: ${contact['latitud']}, Longitud: ${contact['longitud']}. \nFecha: ${contact["fecha"]})',
-                            style: const TextStyle(fontSize: 13)
-                          ),
-                          isThreeLine: true
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete_outline, color: Colors.red[700]),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text("Eliminar Registo..."),
+                                      content: const Text("¿Está realmente seguro?"),
+                                      actions: [
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: Theme.of(context).textTheme.labelLarge,
+                                          ), 
+                                          onPressed: () { Navigator.pop(context, false); }, 
+                                          child: const Text("Cancelar")
+                                        ),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: Theme.of(context).textTheme.labelLarge,
+                                          ),
+                                          onPressed: () { databaseReference.child(contact['key']).remove().then((value) => Navigator.pop(context, false)); }, 
+                                          child: const Text("Ok")
+                                        ),
+                                      ]
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            title: 
+                            Text(
+                              contact['nombre'],
+                              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)
+                            ),
+                            subtitle: Text(
+                              'Aceleración: ${contact['aceleracion']} m/s^2. \nUbicación: (Latitud: ${contact['latitud']}, Longitud: ${contact['longitud']}.)',
+                              style: const TextStyle(fontSize: 14)
+                            ),
+                            isThreeLine: true
+                          )
                         )
                       )
-                    ),
+                    ],
+                  ) 
                 );
-                // );
               }
             )
           ]
