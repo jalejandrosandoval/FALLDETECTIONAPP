@@ -17,16 +17,15 @@ class EventsPage extends StatelessWidget {
   }
 }
 
-class EventsPageMain extends StatefulWidget{
+class EventsPageMain extends StatefulWidget {
   const EventsPageMain({super.key});
-  
+
   @override
   State<EventsPageMain> createState() => EventsPageState();
 }
 
-
-class EventsPageState extends State<EventsPageMain>{
-  bool isRegistered = false, isLoggedIn = false; 
+class EventsPageState extends State<EventsPageMain> {
+  bool isRegistered = false, isLoggedIn = false;
   static const Color _colorForms = Colors.lightBlue;
 
   String? userName, userPassword;
@@ -34,9 +33,9 @@ class EventsPageState extends State<EventsPageMain>{
 
   Object listData = [];
 
-  _getSearch(String param) async{  
+  _getSearch(String param) async {
     DatabaseReference dbRef = FirebaseDatabase.instance.ref().child('caidas');
-    
+
     dbRef.onValue.listen((event) {
       DataSnapshot dataSnapshot = event.snapshot;
       Object values = dataSnapshot.value!;
@@ -52,107 +51,114 @@ class EventsPageState extends State<EventsPageMain>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding( 
+      body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
             TextField(
-              onChanged: (value) => 
-              {
-                setState((){
+              onChanged: (value) {
+                setState(() {
                   userNameSearch = value;
-                }),
-                _getSearch(value)
+                });
+                _getSearch(value);
               },
               decoration: InputDecoration(
                 icon: IconButton(
-                  icon: const Icon(Icons.search_outlined), 
-                  onPressed: () { 
+                  icon: const Icon(Icons.search_outlined),
+                  onPressed: () {
                     _getSearch(userNameSearch);
-                  }
+                  },
                 ),
                 labelText: 'Buscar...',
                 hintText: 'Buscar...',
                 iconColor: _colorForms,
-              )
+              ),
             ),
             const Padding(padding: EdgeInsets.only(bottom: 20.0)),
-            FirebaseAnimatedList(
-              query: databaseReference,
-              shrinkWrap: true,
-              itemBuilder: (context, snapshot, animation, index) {
-                Map contact = snapshot.value as Map;
-                contact['key'] = snapshot.key;
-                return GestureDetector(
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) { 
-                              return NavBarComponent(
-                                latIngParam: LatLng(contact['latitud'], contact['longitud']), 
-                                userDataParam: userData
-                              ); 
-                            })
-                          );
-                        },
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete_outline, color: Colors.red[700]),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text("Eliminar Registo..."),
-                                  content: const Text("¿Está realmente seguro?"),
-                                  actions: [
-                                    TextButton(
-                                      style: TextButton.styleFrom(
-                                        textStyle: Theme.of(context).textTheme.labelLarge,
-                                      ), 
-                                      onPressed: () { Navigator.pop(context, false); }, 
-                                      child: const Text("Cancelar")
-                                    ),
-                                    TextButton(
-                                      style: TextButton.styleFrom(
-                                        textStyle: Theme.of(context).textTheme.labelLarge,
-                                      ),
-                                      onPressed: () { databaseReference.child(contact['key']).remove().then((value) => Navigator.pop(context, false)); }, 
-                                      child: const Text("Ok")
-                                    ),
-                                  ]
+            Expanded(
+              child: Scrollbar(
+                child: SingleChildScrollView(
+                  child: FirebaseAnimatedList(
+                    query: databaseReference,
+                    shrinkWrap: true,
+                    itemBuilder: (context, snapshot, animation, index) {
+                      Map contact = snapshot.value as Map;
+                      contact['key'] = snapshot.key;
+                      return GestureDetector(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Card(
+                            child: ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return NavBarComponent(
+                                      latIngParam: LatLng(contact['latitud'], contact['longitud']),
+                                      userDataParam: userData,
+                                    );
+                                  }),
                                 );
                               },
-                            );
-                          },
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete_outline, color: Colors.red[700]),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text("Eliminar Registo..."),
+                                        content: const Text("¿Está realmente seguro?"),
+                                        actions: [
+                                          TextButton(
+                                            style: TextButton.styleFrom(
+                                              textStyle: Theme.of(context).textTheme.labelLarge,
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context, false);
+                                            },
+                                            child: const Text("Cancelar"),
+                                          ),
+                                          TextButton(
+                                            style: TextButton.styleFrom(
+                                              textStyle: Theme.of(context).textTheme.labelLarge,
+                                            ),
+                                            onPressed: () {
+                                              databaseReference.child(contact['key']).remove().then((value) => Navigator.pop(context, false));
+                                            },
+                                            child: const Text("Ok"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                              title: Text(
+                                contact['nombre'],
+                                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                'Aceleración: ${contact['aceleracion']} m/s^2. \nUbicación: (Latitud: ${contact['latitud']}, Longitud: ${contact['longitud']}.)',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              isThreeLine: true,
+                            ),
+                          ),
                         ),
-                        title: 
-                        Text(
-                          contact['nombre'],
-                          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)
-                        ),
-                        subtitle: Text(
-                          'Aceleración: ${contact['aceleracion']} m/s^2. \nUbicación: (Latitud: ${contact['latitud']}, Longitud: ${contact['longitud']}.)',
-                          style: const TextStyle(fontSize: 14)
-                        ),
-                        isThreeLine: true
-                      )
-                    )
+                      );
+                    },
                   ),
-                );
-              }
-            )
-          ]
-        )
-      )
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
-         
