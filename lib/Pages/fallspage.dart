@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class FallsPage extends StatelessWidget {
   const FallsPage({super.key});
@@ -88,6 +89,7 @@ class FallsPageState extends State<FallsPageMain> {
         await _getRealTimeLocation(); // Espera a obtener la ubicación en tiempo real
         sendFallInformation();
         sendEmail();
+        saveInfo();
       } else if (smoothedAcceleration >= fallThresholdMedium) {
         setState(() {
           fallRisk = 'Alto riesgo de caída';
@@ -205,5 +207,31 @@ class FallsPageState extends State<FallsPageMain> {
         ),
       ),
     );
+  }
+
+DatabaseReference? dbRef;
+
+  saveInfo() async {
+    dbRef = FirebaseDatabase.instance.ref().child('caidas');
+    String nombre = "Horacio";
+    int idUsuario = 1;
+     final now = DateTime.now();
+     String fecha = now.toString();
+
+
+     try {
+        Map caidas= {
+          'nombre': nombre,
+          'id_usuario': idUsuario,
+          'latitud': latitude,
+          'longitud': longitude,
+          'aceleracion': accelerometerValue,
+          'id_cuidador': 0,
+          'fecha': fecha,
+        };
+        dbRef!.push().set(caidas);
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 }
