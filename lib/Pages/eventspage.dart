@@ -1,13 +1,18 @@
-import 'package:falldetectionapp/Pages/ubicationpage.dart';
+import 'package:falldetectionapp/Components/navbar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+dynamic userData;
 
 class EventsPage extends StatelessWidget {
-  const EventsPage({super.key});
+  final dynamic userDataParam;
+  const EventsPage({Key? key, this.userDataParam}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    userData = userDataParam;
     return const EventsPageMain();
   }
 }
@@ -23,14 +28,27 @@ class EventsPageMain extends StatefulWidget{
 class EventsPageState extends State<EventsPageMain>{
   bool isRegistered = false, isLoggedIn = false; 
   static const Color _colorForms = Colors.lightBlue;
-  String? userName, userPassword;
-  String latitud = "", longitud = "";
 
-  TextEditingController userNameController = TextEditingController(); 
-  TextEditingController userPasswordController = TextEditingController(); 
-  
+  String? userName, userPassword;
+  String userNameSearch = "", latitud = "", longitud = "";
+
+  Object listData = [];
+
+  _getSearch(String param) async{  
+    DatabaseReference dbRef = FirebaseDatabase.instance.ref().child('caidas');
+    
+    dbRef.onValue.listen((event) {
+      DataSnapshot dataSnapshot = event.snapshot;
+      Object values = dataSnapshot.value!;
+      setState(() {
+        listData = values;
+        print(listData);
+      });
+    });
+  }
+
   DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('caidas');
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,13 +56,25 @@ class EventsPageState extends State<EventsPageMain>{
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
-            const TextField(
+            TextField(
+              onChanged: (value) => 
+              {
+                setState((){
+                  userNameSearch = value;
+                }),
+                _getSearch(value)
+              },
               decoration: InputDecoration(
-                icon: Icon(Icons.search_outlined),
+                icon: IconButton(
+                  icon: const Icon(Icons.search_outlined), 
+                  onPressed: () { 
+                    _getSearch(userNameSearch);
+                  }
+                ),
                 labelText: 'Buscar...',
                 hintText: 'Buscar...',
                 iconColor: _colorForms,
-              ),
+              )
             ),
             const Padding(padding: EdgeInsets.only(bottom: 20.0)),
             FirebaseAnimatedList(
@@ -59,8 +89,15 @@ class EventsPageState extends State<EventsPageMain>{
                     child: Card(
                       child: ListTile(
                         onTap: () {
-                          print(contact['nombre']);
-                          const UbicationPage();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) { 
+                              return NavBarComponent(
+                                latIngParam: LatLng(contact['latitud'], contact['longitud']), 
+                                userDataParam: userData
+                              ); 
+                            })
+                          );
                         },
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(color: Colors.white),

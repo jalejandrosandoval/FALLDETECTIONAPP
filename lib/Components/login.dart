@@ -1,5 +1,6 @@
 import 'package:falldetectionapp/Components/navbar.dart';
 import 'package:falldetectionapp/Components/register.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class LoginComponent extends StatelessWidget {
@@ -19,90 +20,108 @@ class LoginMain extends StatefulWidget {
 }
 
 class _LoginMainState extends State<LoginMain> {
-  bool isRegistered = false, isLoggedIn = false, _hidePassword = false; 
+  bool isRegistered = false, isLoggedIn = false, _hidePassword = false;
   static const Color _colorForms = Colors.lightBlue;
 
-  TextEditingController userNameController = TextEditingController(); 
-  TextEditingController userPasswordController = TextEditingController(); 
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController userPasswordController = TextEditingController();
 
-  _Register(){
+  List<dynamic> listUsers = List.empty();
+  _Register() {
     setState(() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) { return const RegisterComponent(); })
-      );
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const RegisterComponent();
+      }));
     });
   }
 
-  _Login() async {
+  _Login() {
     setState(() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) { return const NavBarComponent(); })
-      );
+      if (userNameController.text.isNotEmpty &&
+          userPasswordController.text.isNotEmpty) {
+        for (var element in listUsers) {
+          if (element["username"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(userNameController.text.toLowerCase()) &&
+              element["password"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(userPasswordController.text.toLowerCase())) {
+            print(
+                'value=$element - $userNameController.text - $userPasswordController.text');
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return NavBarComponent(userDataParam: element);
+            }));
+          }
+        }
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isLoggedIn) {
-      return const NavBarComponent();
-    } else {
-      return Scaffold(
-        appBar: AppBar(title: const Text('FALL DETECTION APP')),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("/images/login.png"),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: TextField(
+    FirebaseDatabase.instance.ref().child('usuario').get().then((value) {
+      listUsers = value.value! as List<dynamic>;
+    });
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('FALL DETECTION APP')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("/images/login.png"),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: TextField(
                   controller: userNameController,
                   decoration: const InputDecoration(
                     icon: Icon(Icons.person_2_outlined),
                     labelText: 'Usuario...',
                     hintText: 'Usuario...',
                     iconColor: _colorForms,
-                  )
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30.0),
-                padding: const EdgeInsets.only(bottom: 20.0),   
-                child: TextField(
+                  )),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: TextField(
                   controller: userPasswordController,
                   decoration: InputDecoration(
-                    icon: const Icon(Icons.lock),
-                    iconColor: _colorForms,
-                    labelText: 'Contraseña...',
-                    hintText: 'Contraseña...',
-                    suffixIcon: IconButton(
-                      icon: Icon(_hidePassword ? Icons.visibility : Icons.visibility_off, color: _colorForms),
-                      onPressed: () {
-                        setState(() {
-                          _hidePassword = !_hidePassword;
-                        });
-                      },
-                    )
-                  ),
-                  obscureText: _hidePassword ? false : true
-                ),
-              ),
-              FloatingActionButton.extended(
+                      icon: const Icon(Icons.lock),
+                      iconColor: _colorForms,
+                      labelText: 'Contraseña...',
+                      hintText: 'Contraseña...',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                            _hidePassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: _colorForms),
+                        onPressed: () {
+                          setState(() {
+                            _hidePassword = !_hidePassword;
+                          });
+                        },
+                      )),
+                  obscureText: _hidePassword ? false : true),
+            ),
+            FloatingActionButton.extended(
                 onPressed: _Login,
                 icon: const Icon(Icons.login_outlined),
-                label: const Text('Iniciar Sesión')
+                label: const Text('Iniciar Sesión')),
+            const Text(''),
+            TextButton(
+              onPressed: _Register,
+              child: const Text(
+                '¿No tienes una cuenta? Regístrate aquí...',
+                style: TextStyle(color: Colors.black),
               ),
-              const Text(''),
-              TextButton(
-                onPressed: _Register, 
-                child: const Text('¿No tienes una cuenta? Regístrate aquí...', style: TextStyle(color: Colors.black),),
-              )
-            ],
-          ),
+            )
+          ],
         ),
-      );
-    }
+      ),
+    );
   }
 }
