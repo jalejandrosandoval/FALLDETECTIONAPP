@@ -147,7 +147,7 @@ class FallsPageState extends State<FallsPageMain> {
 
   void sendEmail() async {
     // Configura el servidor SMTP para enviar el correo
-    final smtpServer = gmail('flosada@unab.edu.co', '63559.Mal');
+    final smtpServer = gmail('flosada@unab.edu.co', '1233456.Mal');
 
     // Crea el mensaje de correo
     final message = Message()
