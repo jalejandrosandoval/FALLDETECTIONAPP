@@ -50,7 +50,7 @@ class RegisterMainState extends State<RegisterMain>{
           const Text("Registrarse...",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)
           ),
-          Image.asset("/images/sign_in.png"),
+          Image.asset("assets/images/sign_in.png"),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 30.0),
               child: TextField(

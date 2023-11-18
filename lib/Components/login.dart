@@ -26,7 +26,8 @@ class _LoginMainState extends State<LoginMain> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController userPasswordController = TextEditingController();
 
-  List<dynamic> listUsers = List.empty();
+    List<dynamic> listUsers = List.empty();
+
   _Register() {
     setState(() {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -64,62 +65,66 @@ class _LoginMainState extends State<LoginMain> {
     FirebaseDatabase.instance.ref().child('usuario').get().then((value) {
       listUsers = value.value! as List<dynamic>;
     });
-
     return Scaffold(
       appBar: AppBar(title: const Text('FALL DETECTION APP')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset("/images/login.png"),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: TextField(
-                  controller: userNameController,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.person_2_outlined),
-                    labelText: 'Usuario...',
-                    hintText: 'Usuario...',
-                    iconColor: _colorForms,
-                  )),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 30.0),
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: TextField(
-                  controller: userPasswordController,
-                  decoration: InputDecoration(
-                      icon: const Icon(Icons.lock),
-                      iconColor: _colorForms,
-                      labelText: 'Contraseña...',
-                      hintText: 'Contraseña...',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                            _hidePassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: _colorForms),
-                        onPressed: () {
-                          setState(() {
-                            _hidePassword = !_hidePassword;
-                          });
-                        },
-                      )),
-                  obscureText: _hidePassword ? false : true),
-            ),
-            FloatingActionButton.extended(
-                onPressed: _Login,
-                icon: const Icon(Icons.login_outlined),
-                label: const Text('Iniciar Sesión')),
-            const Text(''),
-            TextButton(
-              onPressed: _Register,
-              child: const Text(
-                '¿No tienes una cuenta? Regístrate aquí...',
-                style: TextStyle(color: Colors.black),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 200, // Ajusta según sea necesario
+                child: Image.asset("assets/images/login.png"),
               ),
-            )
-          ],
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: TextField(
+                    controller: userNameController,
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.person_2_outlined),
+                      labelText: 'Usuario...',
+                      hintText: 'Usuario...',
+                      iconColor: _colorForms,
+                    )),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: TextField(
+                    controller: userPasswordController,
+                    decoration: InputDecoration(
+                        icon: const Icon(Icons.lock),
+                        iconColor: _colorForms,
+                        labelText: 'Contraseña...',
+                        hintText: 'Contraseña...',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                              _hidePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: _colorForms),
+                          onPressed: () {
+                            setState(() {
+                              _hidePassword = !_hidePassword;
+                            });
+                          },
+                        )),
+                    obscureText: _hidePassword ? false : true),
+              ),
+              FloatingActionButton.extended(
+                  onPressed: _Login,
+                  icon: const Icon(Icons.login_outlined),
+                  label: const Text('Iniciar Sesión')),
+              const Text(''),
+              TextButton(
+                onPressed: _Register,
+                child: const Text(
+                  '¿No tienes una cuenta? Regístrate aquí...',
+                  style: TextStyle(color: Colors.black),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
