@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UbicationPage extends StatelessWidget {
   const UbicationPage({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return const UbicationPageMain();
