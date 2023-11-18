@@ -14,7 +14,7 @@ class InitPage extends StatelessWidget {
             const Text("Bienvenido...",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)
             ),
-            Image.asset("/images/welcome.png"),
+            Image.asset("assets/images/welcome.png"),
             FloatingActionButton.extended(
               backgroundColor: Colors.teal[400],
               onPressed: () => {
