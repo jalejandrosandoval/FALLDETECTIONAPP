@@ -23,10 +23,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.lightBlue[800],
-        scaffoldBackgroundColor: Colors.white
+        scaffoldBackgroundColor: Colors.white,       
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text('FALL DETECTION APP')),
