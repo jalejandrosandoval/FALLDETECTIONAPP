@@ -66,15 +66,12 @@ class _LoginMainState extends State<LoginMain> {
     });
     return Scaffold(
       appBar: AppBar(title: const Text('FALL DETECTION APP')),
-      body: SingleChildScrollView(
-        child: Center(
+      body: Center(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 200, // Ajusta según sea necesario
-                child: Image.asset("assets/images/login.png"),
-              ),
+              Image.asset("assets/images/login.png"),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: TextField(
